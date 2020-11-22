@@ -155,7 +155,7 @@ EMAIL_HOST_PASSWORD = 'pwefkfuhiyrmbgaa'
 EMAIL_USE_TLS = True
 
 #CACHES
-CACHES{
+CACHES = {
     'default':{
         'BACKEND':'django.core.cache.backends.db.DatabaseCache',
         'LOCATION':'cache_table_home',
