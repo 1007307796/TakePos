@@ -1,0 +1,90 @@
+/* #yzw{
+    background-image: url('/media/product_cover/yzw.png');
+}
+#amac{
+    background-image: url('/media/product_cover/amac.png');
+    background-position-x: -80px;
+} */
+.product-cover{
+    width: 100%;
+}
+
+.category-label-title{
+    font-size: 30px;
+    color: #000;
+    margin: 10px;
+    text-decoration: none;
+}
+.exp-imgs a{
+    color: #fff;
+    text-decoration: none;
+}
+
+.product-box{
+    height: 222px;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: #000 solid 2px;
+    margin-top: 30px;
+}
+.product-box a{
+    color: #fff;
+    text-decoration: none;
+}
+
+
+.CodeMirror{
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+span.glyphicon-fire{
+    color: red;
+    font-size: small;
+    margin-left: 50px;
+}
+h3{
+    line-height: 1.5em;
+}
+.warn-info{
+    margin-top: 60px;
+}
+.label-service .badge{
+    color: #000;
+}
+.label-service .btn-primary{
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+}
+.label-service .btn-primary:hover{
+    background-color: #fff;
+    color: #000;
+}
+.label-lint{
+    background-color: #000;
+    top:4px
+}
+
+
+#run{
+    position:absolute;
+    right:5px;
+    bottom:5px;
+    width:0px;  
+    height: 0px;
+    border-left: 70px solid transparent;
+    border-right: 70px solid #000;
+    border-top: 70px solid transparent;
+    border-bottom:  70px solid #000;
+    color: #fff;
+    font-size: larger;
+    font-weight: bold;
+}
+
+#run>a:hover{
+    font-size: larger;
+    text-shadow: 5px 5px 5px #e3e3e3;
+    transition: all .3s ease-in-out;
+}

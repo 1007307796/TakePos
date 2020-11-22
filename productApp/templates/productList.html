@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}
+服务类型
+{% endblock %}
+{% block content %}
+<link href="{% static 'css/products.css' %}" rel="stylesheet">
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="category-label-title">
+                请选择服务类型：
+            </div>
+            <div class="category-label">
+                <ul class="list-group">
+                    {% for product in productList %}
+                    <li class="list-group-item product-box">
+                        <img src="{{ product.imageCover.url }}" class="product-cover img-responsive" onload="DrawImages(this)"/>
+                        <h3>
+                            <span class="label label-primary label-lint"> {{ product.get_title_display }}&nbsp;/&nbsp;{{product.website}}</span>
+                            <div></div>
+                            {% for img in product.productImgs.all %}
+                            <span class="label label-primary label-lint">
+                                {% if forloop.first %}
+                                <a href="{{img.photo.url}}" data-lightbox="roadtrip {{ product.title }}">
+                                    看看哪些小伙伴们抢到啦
+                                    <span class="glyphicon glyphicon-hand-up"></span>
+                                </a>
+                                {% else %}
+                                <a href="{{img.photo.url}}" data-lightbox="roadtrip {{ product.title }}"></a>
+                                {% endif %}
+                            </span>
+                            {% endfor %}
+                            <div id="run"><a href="{% url 'productApp:productDetail' product.id %}">Go<span class="glyphicon glyphicon-chevron-right"></span></a></div>
+                        </h3>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-2 col-md-offset-1 btn-group-vertical label-service" role="group">
+            {% for label in labels %}
+            <a href="{% url 'productApp:products' label.pid %}">
+                <button class="btn btn-primary" type="button">
+                    {{ label.pname }}&nbsp;<span class="badge">{{ label.pcount }}</span>
+                </button>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% if productList %}
+    <div class="paginated-nav">
+        <nav aria-label="...">
+            <ul class="pager pagination-lg paginated">
+                {% if productList.has_previous %}
+                <li><a href="?page={{ productList.previous_page_number }}">前一页</a></li>
+                {% endif %}
+                {% if productList.has_next %}
+                <li><a href="?page={{ productList.next_page_number }}">后一页</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

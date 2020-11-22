@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}
+人脸识别
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}" />
+<div class="container">
+    <div class="row row-3">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation" id="tools-title"><a href="#">TP实验室</a></li>
+                <li role="presentation"><a href="{% url 'contactApp:buyermap' %}">热点考场</a></li>
+                <li role="presentation"><a href="{% url 'contactApp:platform' %}">人脸识别</a></li>
+                <li role="presentation"><a href="{% url 'contactApp:download' %}">软件下载</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="jumbotron">
+                <h1>欢迎体验人脸识别系统</h1>
+                <p>OpenCV是一个基于BSD许可（开源）发行的跨平台计算机视觉和机器学习软件库，可以运行在Linux、Windows、Android和Mac OS操作系统上。</p>
+                <p>它轻量级而且高效——由一系列 C 函数和少量 C++ 类构成，同时提供了Python、Ruby、MATLAB等语言的接口，实现了图像处理和计算机视觉方面的很多通用算法。</p>
+                <p><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#facePhoto">立即体验</button></p>
+            </div>
+            <div class="modal fade" id="facePhoto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">在线人脸检测</h4>
+                        </div>
+                        <div class="modal-body">
+                            <img id="imgUp" src="{% static 'img/faceBase.jpg' %}" class="img-responsive" style="max-width: 250px;">
+                            <input type="file" id="photo" name="photo" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="go">开始检测</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+<script>
+    $(function () {
+        $('#photo').on('change', function () {
+            var r = new FileReader();
+            f = document.getElementById('photo').files[0];
+            r.readAsDataURL(f);
+            r.onload = function (e) {
+                document.getElementById('imgUp').src = this.result;
+            };
+        });
+    });
+</script>
+<script>
+    $('#go').click(function () {
+        formdata = new FormData();
+        var file = $("#photo")[0].files[0];
+        formdata.append("image", file);
+        $.ajax({
+            url: '/contactApp/facedetect/', // 调用Django服务器计算函数
+            type: 'POST', // 请求类型
+            data: formdata,
+            dataType: 'json', // 期望获得的响应类型为json
+            processData: false,
+            contentType: false,
+            success: ShowResult // 在请求成功之后调用该回调函数输出结果
+        })
+    })
+</script>
+<script>
+    function ShowResult(data) {
+        var v = data['img64'];
+        document.getElementById('imgUp').src = "data:image/jpeg;base64, " + v;
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}
+信息填写
+{% endblock %}
+{% block content %}
+<link href="{% static 'css/products.css' %}" rel="stylesheet">
+<link href="{% static 'js/codemirror/lib/codemirror.css' %}" rel="stylesheet">
+<link href="{% static 'js/codemirror/theme/darcula.css' %}" rel="stylesheet">
+<script src="{% static 'js/codemirror/lib/codemirror.js' %}"></script>
+<script src="{% static 'js/codemirror/python.js' %}"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="detail-title">{{ product.get_title_display }}<span
+                    class="glyphicon glyphicon-fire">热度：{{ product.views }}</span></h2>
+            <div class="file-area">
+                <form>
+                    <p class="bg-danger">
+                        <span class="glyphicon glyphicon-flag"></span>
+                        各项填入的字段应与报名网站下拉框对应选项相同，填入的字段应在同一下拉框中存在且唯一，实在不知道怎么填请咨询客服
+                    </p>
+                    <div>
+                        <textarea id="code" name="code"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-4 warn-info">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">注意事项</h3>
+                </div>
+                <div class="panel-body">
+                    {{ product.warninfo|linebreaks }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        mode: {
+            name: "python",
+            version: 3,
+            singleLineStringErrors: false
+        },
+        theme: "darcula",
+        lineNumbers: true,
+        indentUnit: 4,
+        tabMode: "shift",
+        matchBrackets: true
+    });
+</script>
+{% endblock %}

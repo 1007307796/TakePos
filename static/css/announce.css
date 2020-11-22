@@ -1,0 +1,19 @@
+.announce-list{
+    height: 60px;
+    font-size: larger;
+}
+.announce-list p{
+    font-size: smaller;
+    overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+.search-announce{
+    text-align: center;
+}
+.highlighted{
+    color: red;
+}
+.search-list{
+    min-height: 300px;
+}

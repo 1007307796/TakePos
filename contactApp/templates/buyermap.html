@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}
+买家地图
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}"/>
+<script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=5Hxm2j2b7RplX4nWkA4vXEMNr1oNGm3K"></script>
+<script src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=5Hxm2j2b7RplX4nWkA4vXEMNr1oNGm3K"></script>
+<script type="text/javascript" src="//api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+<script type="text/javascript" src="//api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+<div class="container">
+    <div class="row row-3">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation" id="tools-title"><a href="#">TP实验室</a></li>
+                <li role="presentation"><a href="{% url 'contactApp:buyermap' %}">热点考场</a></li>
+                <li role="presentation"><a href="{% url 'contactApp:platform' %}">人脸识别</a></li>
+                <li role="presentation"><a href="{% url 'contactApp:download' %}">软件下载</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <h3 class="well well-sm"><span class="glyphicon glyphicon-globe"></span>
+                &nbsp;TakePos&nbsp;热点考场&nbsp;
+                <button class="btn btn-default btn-sm" onclick="getSchool()">点击获取最新热点考场</button>
+            </h3>
+            <div id="allmap"></div>
+            <br> 
+        </div>
+    </div>
+</div>
+<script>
+    var map = new BMap.Map("allmap");
+    function getSchool(){
+        map.centerAndZoom(new BMap.Point(102.404, 33.915), 5);
+        map.enableScrollWheelZoom();
+        var markers = [];
+        var pt = null;
+        for (var item of {{point|safe}}) {
+            pt = new BMap.Point(item.longitude, item.latitude);
+            var mk = new BMap.Marker(pt)
+            mk.setTitle(item.name);
+            markers.push(mk);
+        }
+
+        //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+        var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
+    }
+    
+</script>
+{% endblock %}

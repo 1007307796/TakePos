@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}
+软件下载
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}" />
+<!-- 下载进度条 -->
+<!-- <div class="progress">
+    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
+      <span class="sr-only">下载中...({{ percent }})</span>
+    </div>
+</div>  -->
+<div class="container">   
+    <div class="row row-3">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation" id="tools-title"><a href="#">TP实验室</a></li>
+                <li role="presentation"><a href="{% url 'contactApp:buyermap' %}">热点考场</a></li>
+                <li role="presentation"><a href="{% url 'contactApp:platform' %}">人脸识别</a></li>
+                <li role="presentation"><a href="{% url 'contactApp:download' %}">软件下载</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="list-group">
+                {% for software in softwareList %}
+                    <a href="{% url 'contactApp:getFile' software.id %}" class="list-group-item software-list">
+                        <span class="glyphicon glyphicon-cloud-download"></span>&nbsp;&nbsp;{{ software.title }}
+                        <div class="badge download">下载量：{{ software.count }}</div>
+                        <div class="badge download">{{ software.uploadtime|date:"Y-m-d" }}</div>
+                    </a>                 
+                {% endfor %}
+            </div>
+            {% if softwareList %}
+            <div class="paginated-nav">
+                <nav aria-label="...">
+                    <ul class="pager pagination-lg paginated">
+                        {% if softwareList.has_previous %}
+                            <li><a href="?page={{ softwareList.previous_page_number }}">前一页</a></li>
+                        {% endif %}
+                        {% if softwareList.has_next %}
+                            <li><a href="?page={{ softwareList.next_page_number }}">后一页</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            {% endif %}
+        </div>
+    </div>     
+</div>
+{% endblock %}

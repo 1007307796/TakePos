@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block title %}
+消息反馈
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}"/>
+<div class="container">
+    <div class="panel panel-default feedback">
+        <div class="panel-heading"><h3>Take Pos 问题反馈</h3></div>
+        <div class="panel-body">
+            <form action="." name="feedbackForm" class="horizontal" method="POST" role="form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    {{feedbackForm.username|add_class:"form-control"}}
+                </div>
+                <div class="form-group">
+                    <label for="email">邮箱</label>
+                    {{feedbackForm.email|add_class:"form-control"}}
+                </div>
+                <div class="form-group">
+                    <label for="title">问题标题</label>
+                    {{feedbackForm.title|add_class:"form-control"}}
+                </div>
+                <div class="form-group">
+                    <label for="fdtype">问题类型</label>
+                    {{feedbackForm.fdtype|add_class:"form-control"}}
+                </div>
+                <div class="form-group">
+                    <label for="question">问题详情</label>
+                    {{feedbackForm.question|add_class:"form-control"}}
+                </div>
+                <div class="form-group">
+                    <label for="image">上传图片</label>
+                    {{feedbackForm.image}}
+                </div>
+                <div class="form-group hidden">
+                    <label for="answer">回复</label>
+                    {{feedbackForm.answer|add_class:"form-control"}}
+                </div>
+                <div class="form-group hidden">
+                    <label for="publishtime">提交时间</label>
+                    {{feedbackForm.publishtime|add_class:"form-control"}}
+                </div>
+                <div class="form-group hidden">
+                    <label for="replytime">回复时间</label>
+                    {{feedbackForm.replytime|add_class:"form-control"}}
+                </div>
+                <div class="form-group hidden">
+                    <label for="status">问题状态</label>
+                    {{feedbackForm.status|add_class:"form-control"}}
+                </div>
+                <button type="submit" class="btn btn-primay">提交</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/laydate/laydate.js' %}"></script>
+<script>
+    laydate.render({
+        elem: '#id_publishtime'
+    });
+    laydate.render({
+        elem: '#id_replytime'
+    });
+</script>
+<script>
+    $(function () {
+        $('#id_image').on('change', function () {
+            var r = new FileReader();
+            f = document.getElementById('id_image').files[0];
+            r.readAsDataURL(f);
+            r.onload = function (e) {
+                document.getElementById('profileshow').src = this.result;
+            };
+        });
+    });
+</script>
+{% endblock %}

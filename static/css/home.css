@@ -1,0 +1,24 @@
+.row-3 {
+    margin-top: 30px;
+}
+
+.welcome a.btn {
+    background-color: #000;
+    color: #fff;
+}
+
+.welcome a.btn:hover {
+    color: #0b0b0b;
+    background-color: #fff;
+}
+#topTitle{
+    background-color: #000;
+    color: #fff;
+}
+#hotproduct{
+    height: 150px;
+}
+#hotproduct h5{
+    color: #000;
+    text-align: center;
+}
