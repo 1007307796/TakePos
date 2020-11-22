@@ -27,7 +27,7 @@ class TestcontactApp(unittest.TestCase):
         print(datalist)
 
     def test_message(self):
-        print(date.time())
+        
  
  
 if __name__ == '__main__':
