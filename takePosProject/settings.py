@@ -155,7 +155,7 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = '1007307796@qq.com'
-EMAIL_HOST_PASSWORD = 'pwefkfuhiyrmbgaa'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 
 #CACHES
