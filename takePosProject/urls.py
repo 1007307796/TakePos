@@ -22,9 +22,11 @@ from homeApp.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',home,name="home"),
+    path('homeApp',include('homeApp.urls')), 
+    path('',home,name="home"), 
     path('contactApp/',include('contactApp.urls')),
     path('userApp/',include('userApp.urls')),
+    path('userApp/',include('django.contrib.auth.urls')),
     path('announceApp/',include('announceApp.urls')),
     path('productApp/',include('productApp.urls')),
     path('ueditor/',include('DjangoUeditor.urls')),

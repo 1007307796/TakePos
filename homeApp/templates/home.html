@@ -10,7 +10,15 @@
     <div class="row row-3">
         <div class="col-md-8 welcome">
             <div class="jumbotron">
-                <h1><span id="greet"></span>，{{ currentUser }}!</h1>
+                <h1>
+                    <span id="greet">
+                    </span>,
+                    {% if user.is_authenticated %}
+                    {{ user.username }}!
+                    {% else %}
+                    <span>请先登录</span>
+                    {% endif %}
+                </h1>
                 <p>欢迎使用TakePos，我们提供24小时自助考场帮抢服务，旨在帮助各位同学选到理想考场，免去不必的行程精力和开销</p>
                 <p><a class="btn btn-primary btn-lg" href="{% url 'productApp:products' 'all' %}"
                         role="button">立即开抢！</a></p>
@@ -18,9 +26,9 @@
         </div>
         <div class="col-md-4 show-users">
             <div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-heading" id="topTitle">TakePos已助以下用户成功抢座！</div>
-                    <div class="panel-body">
+                <div class="panel panel-default home-panel">
+                    <div class="panel-heading topTitle">TakePos已助以下用户成功抢座！</div>
+                    <div class="panel-body home-content">
                         <div id="carousel-example-vertical" class="carousel slide vertical" data-ride="carousel">
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner" role="listbox">
@@ -30,7 +38,7 @@
                                     <p class="ticker-headline">
                                         <img src="{{ user.user.headsculpture.url }}">
                                         <span class="usertop">
-                                            恭喜{{ user.user.username }}抢座成功，耗时{{ user.cost }}!
+                                            恭喜{{ user.user.username|truncatechars:"6" }}抢座成功，耗时{{ user.cost }}!
                                         </span>
                                     </p>
                                 </div>
@@ -53,12 +61,12 @@
             </div>
             <!-- 用户榜 END-->
             <div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-heading" id="topTitle">看看小伙伴们都在抢什么？</div>
-                    <div class="panel-body" id="hotproduct">
+                <div class="panel panel-default home-panel">
+                    <div class="panel-heading topTitle">看看小伙伴们都在抢什么？</div>
+                    <div class="panel-body home-content">
                         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                             <!-- Wrapper for slides -->
-                            <div class="carousel-inner" role="listbox">
+                            <div class="carousel-inner" role="listbox" id="hotproduct">
                                 {% for product in productList %}
                                 {% if forloop.first %}
                                 <div class="item active">

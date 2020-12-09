@@ -4,24 +4,52 @@
 信息填写
 {% endblock %}
 {% block content %}
-<link href="{% static 'css/products.css' %}" rel="stylesheet">
 <link href="{% static 'js/codemirror/lib/codemirror.css' %}" rel="stylesheet">
 <link href="{% static 'js/codemirror/theme/darcula.css' %}" rel="stylesheet">
+<link href="{% static 'css/products.css' %}" rel="stylesheet">
 <script src="{% static 'js/codemirror/lib/codemirror.js' %}"></script>
 <script src="{% static 'js/codemirror/python.js' %}"></script>
+<script>
+    function check_yes() {
+        var ck = document.getElementById("check_");
+        var st = document.getElementById("submit_");
+        if (ck.checked) {
+            st.removeAttribute("disabled");
+            st.classList.remove("disabled");
+        } else {
+            st.setAttribute("disabled","disabled");
+            st.classList.add("disabled");
+        }
+}
+</script>
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <h2 class="detail-title">{{ product.get_title_display }}<span
-                    class="glyphicon glyphicon-fire">热度：{{ product.views }}</span></h2>
+            <h2 class="detail-title">{{ product.get_title_display }}
+                <span class="glyphicon glyphicon-fire">热度：{{ product.views }}</span>
+            </h2>
             <div class="file-area">
-                <form>
-                    <p class="bg-danger">
-                        <span class="glyphicon glyphicon-flag"></span>
-                        各项填入的字段应与报名网站下拉框对应选项相同，填入的字段应在同一下拉框中存在且唯一，实在不知道怎么填请咨询客服
-                    </p>
-                    <div>
+                <form class="form-horizontal" action="{% url 'productApp:createOrder' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="code"> 
+                            <p class="bg-danger">
+                                <span class="glyphicon glyphicon-flag"></span>
+                                各项填入的字段应与报名网站下拉框对应选项相同，填入的字段应在同一下拉框中存在且唯一，实在不知道怎么填请咨询客服
+                            </p>
+                        </label>
                         <textarea id="code" name="code"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-5" id="check">
+                            <label for="check"></label>
+                            <input type="checkbox" id="check_" onclick="check_yes()"/>&nbsp;我已阅读并同意
+                                <a href="#">Takepos使用协议</a>
+                        </div>
+                        <div class="col-md-offset-2 col-md-1 bw-button">
+                            <label for="submit"></label>
+                            <button class="btn btn-primary disabled" id="submit_" disabled="disabled" type="submit">提交申请</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -39,17 +67,19 @@
     </div>
 </div>
 <script>
+    var text = `{{ product.get_textModel_display|safe }}`;
     var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         mode: {
             name: "python",
             version: 3,
             singleLineStringErrors: false
         },
-        theme: "darcula",
+        theme: "default",
         lineNumbers: true,
-        indentUnit: 4,
-        tabMode: "shift",
-        matchBrackets: true
+        matchBrackets: true,
+        smartIndent: false,
+        scrollbarStyle: null,
     });
+    editor.setValue(text);
 </script>
 {% endblock %}

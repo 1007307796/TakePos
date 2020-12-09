@@ -3,22 +3,39 @@
 }
 
 .welcome a.btn {
-    background-color: #000;
+    background-color: #5c5c5c;
     color: #fff;
 }
-
+  
 .welcome a.btn:hover {
-    color: #0b0b0b;
+    color: #5c5c5c;
     background-color: #fff;
 }
-#topTitle{
-    background-color: #000;
+.panel-heading.topTitle{
+    background-color: #5c5c5c;
     color: #fff;
+}
+.home-content{
+    background-color:rgb(255,255,255,0.2);
+}
+
+.home-panel{
+    border: 0px;
+    background-color:rgb(0,0,0,0.5);
+}
+.usertop{
+    color: #fff;
+    letter-spacing: 0.1em;
+    white-space: normal;
+    text-align: right;
+}
+.ticker-headline{
+    padding: 15px 0;
 }
 #hotproduct{
     height: 150px;
 }
 #hotproduct h5{
-    color: #000;
+    color: #fff;
     text-align: center;
 }

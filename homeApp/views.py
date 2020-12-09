@@ -5,12 +5,11 @@ from userApp.models import User
 from time import sleep
 from datetime import datetime
 from django.views.decorators.cache import cache_page
-@cache_page(60*15)
+# @cache_page(60*15)
 
 # Create your views here.
 def home(request):
     users = SucceededUser.objects.all().order_by('-timeend')[:20]
-    currentUser = User.objects.get(username="testtop")
     for user in users:
         t = user.timeend-user.timestart
         secs = t.seconds
@@ -26,6 +25,5 @@ def home(request):
     return render(request,'home.html',{
         'active_menu' : 'home',
         'users' : users,
-        'currentUser': currentUser,
         'productList': productList,
     })

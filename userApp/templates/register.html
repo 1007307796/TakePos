@@ -1,8 +1,21 @@
-{% extends "base.html" %}
+{% extends "register_base.html" %}
 {% load staticfiles %}
-{% block title %}
-    注册
+{% block login_title %}
+注册
 {% endblock %}
-{% block content %}
-    <a href="{% url 'home' %}">返回首页</a>
+{% block register%}
+<h3>用户注册</h3>
+<form class="form" action="{% url 'userApp:register' %}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    {{ field.label_tag }}
+    {{ field }}
+    {{ field.errors }}
+    {% endfor %}
+    <button type="submit" class="btn btn-primary btn-block">注册</button>
+    <input type="hidden" name="next" value="{{ next }}"/>
+</form>
+<div class="flex-center top-gap text-small">
+    <a href="{% url 'login' %}">已有账号?去登录</a>
+</div>
 {% endblock %}

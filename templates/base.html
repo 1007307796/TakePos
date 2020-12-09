@@ -15,9 +15,9 @@
     <script src="{% static 'js/lightbox.min.js' %}"></script>
     <script src="{% static 'js/jqthumb.min.js' %}"></script>
     <script>
-        function DrawImages(img){
+        function DrawImages(img) {
             $(img).jqthumb({
-                width:'100%',
+                width: '100%',
                 height: '100px',
                 zoom: '1',
                 method: 'auto'
@@ -28,6 +28,8 @@
 
 <body>
     <!-- 导航条 -->
+
+    <!--荧光点点-->
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -52,11 +54,35 @@
                     <li class="nav-top" id="user">
                         <a href="{% url 'userApp:userhome' %}">用户中心</a>
                     </li>
+                    <li class="nav-top" id="charts">
+                        <a href="{% url 'productApp:showData' %}">TP大数据</a>
+                    </li>
                     <li class="nav-top" id="announce">
                         <a href="{% url 'announceApp:announce' %}">公告活动</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">
+                            <img src="{{ user.headsculpture.url }}" alt="{{user.username}}" id="nav-img" />
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'userApp:userhome' %}"><span
+                                        class="glyphicon glyphicon-home"></span>我的主页</a></li>
+                            <li><a href="{% url 'password_change' %}"><span
+                                        class="glyphicon glyphicon-wrench"></span>修改密码</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'logout' %}?next={{ request.path }}"><span
+                                        class="glyphicon glyphicon-log-out"></span>退出登录</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{% url 'userApp:register' %}?next={{ request.path }}">注册&nbsp;/&nbsp;登录</a>
+                    </li>
+                    {% endif %}
                     <li class="dropdown">
                         <a href="#" id="contact" class="dropdown-toggle" data-toggle="dropdown" role="button"
                             aria-haspopup="true" aria-expanded="false">联系我们<span class="caret"></span>
@@ -72,10 +98,13 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    {% block content %}
-    {% endblock %}
+    <div class="wel" id="cover-bgpic"></div>
+    <div class="cover-content">
+        {% block content %}
+        {% endblock %}
+    </div>
     <!-- 页脚 -->
-    <div class="container-fluid my-footer">
+    <div class="container my-footer">
         <!-- 站点地图 -->
         <div class="row" id="map-footer">
             <div class="col-md-4">
@@ -104,11 +133,11 @@
     </div>
 </body>
 <script>
-    $(function (){
-        $(".dropdown").mouseover(function (){
+    $(function () {
+        $(".dropdown").mouseover(function () {
             $(this).addClass("open");
         });
-        $(".dropdown").mouseleave(function (){
+        $(".dropdown").mouseleave(function () {
             $(this).removeClass("open");
         });
     });
@@ -118,7 +147,8 @@
 </script>
 <script>
     lightbox.option({
-        'fitImagesInViewport':false
+        'fitImagesInViewport': false
     })
 </script>
+
 </html>

@@ -1,16 +1,44 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+import django.utils.timezone as timezone
 
 # Create your models here.
-class User(models.Model):
-    username = models.CharField(max_length=16,verbose_name="用户名")
-    password = models.CharField(max_length=16,verbose_name="密码")
-    headsculpture = models.ImageField(upload_to='headsculpture/',blank=True,verbose_name="头像")
-    email = models.EmailField(verbose_name="邮箱") 
+class User(AbstractUser): 
+    gender = (
+        ('male', '男'),
+        ('female','女'),
+    )
+    headsculpture = models.ImageField(upload_to='headsculpture/',default="headsculpture/chicken.jpeg",verbose_name="头像")
+    sex = models.CharField(max_length=32,choices=gender,default='男')
+    # 开发订单模型
     # 使用元类在模型创建中为模型取一个别名
     
     def __str__(self):
         return self.username
 
-    class Meta:
+    class Meta(AbstractUser.Meta):
         verbose_name = "用户信息"
         verbose_name_plural = verbose_name
+
+class UserOrder(models.Model):
+    STATUS_CHOIES = (
+        (1,'待支付'),
+        (2,'支付未成功'),
+        (3,'运行中'),
+        (4,'已取消'),
+        (5,'已成功占座'),
+        (6,'占座失败'),
+    )
+    user = models.ForeignKey('userApp.User',related_name='order_user',verbose_name='用户', on_delete=models.CASCADE)
+    product = models.ForeignKey('productApp.Product',related_name='order_product',verbose_name='产品',on_delete=models.CASCADE)
+    status = models.SmallIntegerField(choices=STATUS_CHOIES,default=1,verbose_name="订单状态")
+    trade_no = models.CharField(max_length=128, default='', verbose_name='支付编号')
+    start_time = models.DateTimeField(max_length=20,auto_now=True,verbose_name="开始时间")
+    end_time = models.DateTimeField(max_length=20,auto_now_add=True,verbose_name="结束时间")
+
+    def __str__(self):
+        return str(self.id)
+
+    class Meta:
+        verbose_name = '订单'
+        verbose_name_plural = '订单'
