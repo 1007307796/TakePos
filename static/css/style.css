@@ -9,11 +9,8 @@ body {
     -moz-background-size: cover;
     -ms-background-size: cover;
 }
-.container{
-    min-height: 400px;
-}
 .homepage{
-    width: 95%;
+    width: 90%;
 }
 
 .top{
@@ -29,7 +26,20 @@ body {
     color: #666;
     float: right;
 }
-
+/*背景图片*/
+#cover-bgpic{
+    background: url("../img/backimg.jpg") no-repeat center fixed;
+    background-size: cover;
+    height: 900px;
+    filter: blur(10px);
+} 
+.cover-content{
+    position: absolute;
+    top: 100px;
+    height:1800px;
+    min-height: 100%;
+    width: 100%;
+}
 .ant:link{
     text-decoration: none;
 }
@@ -45,31 +55,31 @@ body {
 .navbar-default{
     margin-bottom: 0px;
     border: 0px;
-    background-color: #000;
-    color: #fff;
+    background-color: rgb(31, 31, 31);
+    color: rgb(236, 229, 229);
 }
 .navbar-default .navbar-brand,
 .navbar-default .navbar-brand:hover{
-    color: #fff;
+    color: rgb(219, 206, 206);
 }
 .navbar-default .navbar-nav .active a,
 .navbar-default .navbar-nav .active a:hover,
 .navbar-default .navbar-nav .active a:focus,
 .navbar-right .dropdown-toggle.active{
-    background-color:#000;
+    background-color:rgb(31, 31, 31);
     font-size: larger;
     font-weight: bold;
-    color: #fff;  
+    color: rgb(231, 218, 218);  
 }
  
 .navbar-default .navbar-nav li.open a.on{
-    color: #fff;
-    background-color: #000;
+    color: rgb(233, 223, 223);
+    background-color: rgb(31, 31, 31);
 }
 .navbar-default .navbar-nav>li>a,
 .navbar-default .navbar-nav>li>a:focus,
 .navbar-default .navbar-nav>li>a:hover{
-    color: #fff;
+    color: rgb(230, 214, 214);
 }
 
 .dropdown-menu{
@@ -77,15 +87,29 @@ body {
 }
 
 .dropdown-menu li a{
-    color: #000;
+    color: rgb(31, 31, 31);
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
 }
 .dropdown-toggle{
-    background-color: #000!important;
-    color: #fff!important;
+    background-color: rgb(31, 31, 31)!important;
+    color: rgb(228, 214, 214)!important;
 }
+
+#nav-img{
+    width: 35px;
+    height: 35px;
+    display: inline;
+}
+.navbar-right .glyphicon{
+    font-size: larger;
+    margin-right: 12px;
+    color: rgb(31,31,31);
+}
+
+
+
 .row-3{
     margin-top: 30px;
 }
@@ -110,8 +134,7 @@ body {
 
 .my-footer{
     width: 100%;
-    margin-top: 30px;
-    background-color: #000;
+    background-color: rgb(31, 31, 31);
 }
 #map-footer dl{
     text-align: center;
@@ -119,7 +142,7 @@ body {
 }
 #map-footer dt{
     padding: 3px;
-    color: #fff;
+    color: rgb(233, 227, 227);
 }
 #map-footer dd{
     padding: 3px;
@@ -128,7 +151,7 @@ body {
 #map-footer p{
     margin-top: 20px;
     margin-bottom: 10px;
-    color: #fff;
+    color: rgb(238, 226, 226);
     font-size: 16px;
 }
 
@@ -138,7 +161,7 @@ body {
 }
 
 #map-footer a:hover{
-    color: #fff;
+    color: rgb(241, 234, 234);
     text-decoration: none;
 }
 
@@ -150,7 +173,7 @@ body {
 }
 #patent-footer{
     text-align: center;
-    background-color: #000;
+    background-color: rgb(31, 31, 31);
 }
 #patent-footer p{
     margin-top: 10px;
@@ -161,7 +184,7 @@ body {
 .help-title{
     text-align: center;
     color: #e7e7e7;
-    background-color:#000;
+    background-color:rgb(31, 31, 31);
     margin-top: 25px;
     font-size: 22px;
     padding: 15px 0px;
@@ -177,7 +200,7 @@ body {
 
 .help-list li a:hover{
     text-decoration: none;
-    color: #000;
+    color: rgb(31, 31, 31);
 }
 .user_info{
     max-width: 300px;
@@ -197,10 +220,10 @@ body {
 }
 .paginated li a:hover{
     text-align: center;
-    background-color: #000;
+    background-color: rgb(31, 31, 31);
     color: #fff;
 }
 .paginated li a{
     background-color: #fff;
-    color: #000;
+    color: rgb(31, 31, 31);
 }

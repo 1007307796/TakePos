@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Take Pos | {% block login_title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/user.css' %}" />
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/mobi.min.css' %}" />
+    <style>
+        .errorlist {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <!--背景-->
+    <div class="wel" id="bgpic">
+        <!--荧光点点-->
+        <div class="wel" id="git">
+            <div class="flex-center">
+                <div class="container">
+                    <div class="register-box">
+                        <div class="register-form">
+                        {% block register %}
+                        {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

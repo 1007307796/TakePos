@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}
+大数据
+{% endblock %}
+{% block content %}
+<link href="{% static 'css/products.css' %}" rel="stylesheet">
+<div class="container">
+    <div class="row" id="overView">
+        <!--所有考点累计次数-->
+        <div class="col-md-4" id="totalCount">
+            <div class="panel panel-info">
+                <div class="panel-heading">累计成交次数</div>
+                <div class="panel-body">
+                    <?xml version="1.0" encoding="utf-8"?>
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        style="margin: auto; background: rgb(255, 255, 255); display: block; shape-rendering: auto;"
+                        width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                        <path d="M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50" fill="#e15b64" stroke="none">
+                            <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite"
+                                keyTimes="0;1" values="0 50 51;360 50 51">
+                            </animateTransform>
+                        </path>
+                        <text x="50" y="55" font-size="20" text-anchor="middle" font-weight="bold" fill="gray">0</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <!--平均成功率-->
+        <div class="col-md-4" id="averageRate">
+            <div class="panel panel-info">
+                <div class="panel-heading">平均成功率</div>
+                <div class="panel-body">
+                    {{ data.averageRate|safe }}
+                </div>
+            </div>
+        </div>
+        <!--平均成功耗时-->
+        <div class="col-md-4" id="averageCost">
+            <div class="panel panel-info">
+                <div class="panel-heading">平均成功耗时</div>
+                <div class="panel-body">
+                    {{ data.averageCost|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--目前各个考点排队人数-->
+    <div class="row" id="pointCurrent">
+        <div class="panel panel-info">
+            <div class="panel-heading">各考点排队人数</div>
+            <div class="panel-body">
+                {{ data.pointCurrent|safe }}
+            </div>
+        </div>
+    </div>
+    <!--各个考点详情--> 
+    <div class="row" id="pointDetail">
+        <div class="panel panel-info">
+            <div class="panel-heading">各考点详情</div>
+            <div class="panel-body">
+                {{ data.pointDetail|safe }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

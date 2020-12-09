@@ -88,7 +88,7 @@ DATABASES = {
         'HOST': '',
         'PORT': '3306',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': '123456',
     }
 }
 
@@ -110,8 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
+# Authentication Ways
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'userApp.backends.EmailBackend',
+)
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -152,13 +155,18 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # Email setting
 # QQ
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = '1007307796@qq.com'
+<<<<<<< HEAD
 EMAIL_HOST_PASSWORD = ''
+=======
+EMAIL_HOST_PASSWORD = 'eacvewpwsbvpbcjj'
+>>>>>>> d1a5362 (更新首页和图标页)
 EMAIL_USE_TLS = True
 
-#CACHES
+# CACHES
 CACHES = {
     'default':{
         'BACKEND':'django.core.cache.backends.db.DatabaseCache',
@@ -169,4 +177,13 @@ CACHES = {
         }
     }
 }
+
+# auth user models
+AUTH_USER_MODEL = 'userApp.User'
+
+# Login and Logout
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/userApp/login/'
+
 

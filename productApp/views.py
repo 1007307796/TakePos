@@ -1,7 +1,21 @@
-from django.shortcuts import render,get_object_or_404
-from .models import Product
+from django.shortcuts import render,get_object_or_404,redirect
 from django.db.models import Count
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
+from jinja2 import Environment, FileSystemLoader
+from .models import Product
+from userApp.models import UserOrder
+import json
+import os
+from math import modf
+from pyecharts import options as opts
+from pyecharts.globals import CurrentConfig
+from pyecharts.charts import Liquid,Gauge
+from pyecharts import options as opts
+from pyecharts.charts import PictorialBar
+from pyecharts.charts import Bar
+from pyecharts.faker import Faker
+
+CurrentConfig.GLOBAL_ENV = Environment(loader=FileSystemLoader("./productApp/templates/echarts"))
 
 # Create your views here.
 def products(request,productName):
@@ -48,32 +62,6 @@ def products(request,productName):
             'productList' : productList,
             'labels': labels,
     })
-
-# def productDetail(request,id):
-#     product = get_object_or_404(Product,id=id)
-#     product.views += 1
-#     product.save()
-#     fieldsList={}
-#     fieldsList[product.title]=[
-#         ("报考省份","如:陕西省",""),
-#         ("报考学校","如:西安电子科技大学",""),
-#         ("考试方式","如:全国统一考试",""),
-#         ("专项计划","如:无",""),
-#         ("报考类别","如:非定向就业",""),
-#         ("报考院系","如:机电工程学院",""),
-#         ("报考专业","如:控制科学与工程","请注意区分专硕与学硕"),
-#         ("研究方向","如:控制理论与控制工程",""),
-#         ("学习方式","如:全日制",""),
-#         ("考试科目","如:思想政治理论","若研招网下拉框有多条数据，请输入区别于其他考试科目的具体科目名称"),
-#         ("报考点省份","如:湖南省",""),
-#         ("报考点学校","如:湖南科技大学",""),
-#         ("发送至此邮箱","如:1007307796@qq.com","若不填写，则由客服微信消息通知")
-#     ]
-#     return render(request,'productDetail.html',{
-#         'fieldsList' : fieldsList[product.title],
-#         'product' : product,
-#     })
-
 def productDetail(request,id):
     product = get_object_or_404(Product,id=id)
     product.views += 1
@@ -81,3 +69,126 @@ def productDetail(request,id):
     return render(request,'productDetail.html',{
         'product' : product,
     })
+
+def createOrder(request):
+    # 创建订单
+    order = get_object_or_404(UserOrder,id=4)
+    return render(request, 'create_success.html',{
+        'order': order,
+    })
+
+def showData(request):
+    data = {}
+    # 数据类型 float
+    SuccessRate = 1.0
+    c1 = (
+        Liquid(init_opts=opts.InitOpts(width="350px", height="350px"))
+        .add(
+            series_name="平均成功率",
+            data=[SuccessRate, SuccessRate],
+            tooltip_opts=liquid_format(SuccessRate),
+        )
+    )
+    # 数据类型 hours.minute
+    timeCost = 5.45
+    c2 = (
+        Gauge(init_opts=opts.InitOpts(width="300px", height="300px"))
+        .add(
+            series_name="平均成功耗时",
+            data_pair=[("耗时", timeCost)],
+            min_=0,
+            max_=24,
+            split_number=12,
+            title_label_opts=opts.LabelOpts(
+                font_size=20, color="#C23531",font_family="Microsoft YaHei"
+            ),
+            detail_label_opts=opts.GaugeDetailOpts(offset_center=[0,"30%"],formatter="{value}h"),
+        )
+        .set_global_opts(
+            legend_opts=opts.LegendOpts(is_show=False),
+            tooltip_opts=opts.TooltipOpts(is_show=True, formatter=gauge_format(timeCost)),
+        )
+    )
+    # 数据类型：考点+排队人数
+    location = ["山西", "四川","山东"]
+    values = [13, 42,2]
+    c3 = (
+        PictorialBar(init_opts=opts.InitOpts(height="500px"))
+        .add_xaxis(location)
+        .add_yaxis(
+            "",
+            values,
+            label_opts=opts.LabelOpts(is_show=False),
+            symbol_size=40,
+            symbol_repeat="fixed",
+            symbol_offset=[0, -5],
+            is_symbol_clip=True,
+            symbol="image://../../static/img/wait_people.svg",
+            category_gap="10px",
+            gap="10px",  
+        )
+        .reversal_axis()
+        .set_global_opts(
+            xaxis_opts=opts.AxisOpts(is_show=False),
+            yaxis_opts=opts.AxisOpts(
+                axistick_opts=opts.AxisTickOpts(is_show=False),
+                axisline_opts=opts.AxisLineOpts(
+                    linestyle_opts=opts.LineStyleOpts(opacity=0)
+                ),
+            ),
+        )
+    )
+    points = ["四川大学","成都理工大学","湖南大学"]
+    counts = [4,5,1]
+    # 时.分
+    cost = [4.20,0.32,7.40]
+    c4 = (
+        Bar()
+        .add_xaxis(xaxis_data=points)
+        .add_yaxis(
+            series_name="总人数",
+            y_axis=counts,
+            yaxis_index=0,
+            label_opts=opts.LabelOpts(is_show=False),
+        )
+        .add_yaxis(
+            series_name="时耗",
+            y_axis=cost,
+            yaxis_index=1,
+            label_opts=opts.LabelOpts(is_show=False),
+        )
+        .extend_axis(
+            yaxis=opts.AxisOpts(
+                name="时耗",
+                type_="value",
+                min_=0,
+                max_=24,
+                interval=4,
+                axislabel_opts=opts.LabelOpts(formatter="{value}h"),
+            )
+        )
+        .set_global_opts(
+            tooltip_opts=opts.TooltipOpts(
+                is_show=True, trigger="axis",formatter="{b}<br>{a0}: {c0}<br>{a1}: {c1}h"
+            ),
+            xaxis_opts=opts.AxisOpts(
+                type_="category",
+                axispointer_opts=opts.AxisPointerOpts(is_show=True, type_="shadow"),
+            ),
+        )
+    )
+    data['averageRate']=c1.render_embed()
+    data['averageCost']=c2.render_embed()
+    data['pointCurrent']=c3.render_embed()
+    data['pointDetail']=c4.render_embed()
+    return render(request,'showEcharts.html',{
+        'active_menu': 'charts',
+        'data': data
+    })
+
+# 图像格式化函数
+def gauge_format(params):
+    return '平均成功耗时需' + str(int(params)) + '时' + str(int(modf(params)[0]*100)) + '分'
+
+def liquid_format(params):
+    return '成功率超过' + str(params*100) + '%!'

@@ -1,0 +1,4 @@
+<circle class="circle" fill="none" transform="rotate(-45 100 100)" stroke="#68E534" stroke-width="10" cx="100"
+    cy="100" r="95" stroke-linecap="round" />
+<polyline class="tick" fill="none" stroke="#68E534" stroke-width="12" points="44,107 86,142 152,69"
+    stroke-linecap="round" stroke-linejoin="round"></polyline>
