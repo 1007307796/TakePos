@@ -1,2 +1,6 @@
 *.sqlite3
+<<<<<<< HEAD
 takePosProject/setting.py
+=======
+setting.py
+>>>>>>> cfbd4f0dae51bd6c410e6daa1395ee73b28c45ef
