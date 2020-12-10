@@ -10,7 +10,9 @@ h3{text-align: center;margin-top: 0px;}
 .nav-stacked li a{
     color: black;
 }
-
+.more{
+    min-height: 100px;
+}
 #allmap{
     width:100%;
     height:500px;
