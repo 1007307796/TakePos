@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import django.utils.timezone as timezone
+from productApp.models import Product  
 
 # Create your models here.
 class User(AbstractUser): 
@@ -29,8 +30,8 @@ class UserOrder(models.Model):
         (5,'已成功占座'),
         (6,'占座失败'),
     )
-    user = models.ForeignKey('userApp.User',related_name='order_user',verbose_name='用户', on_delete=models.CASCADE)
-    product = models.ForeignKey('productApp.Product',related_name='order_product',verbose_name='产品',on_delete=models.CASCADE)
+    user = models.ForeignKey(User,related_name='order_user',verbose_name='用户', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,related_name='order_product',verbose_name='产品',on_delete=models.CASCADE)
     status = models.SmallIntegerField(choices=STATUS_CHOIES,default=1,verbose_name="订单状态")
     trade_no = models.CharField(max_length=128, default='', verbose_name='支付编号')
     start_time = models.DateTimeField(max_length=20,auto_now=True,verbose_name="开始时间")
