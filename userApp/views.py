@@ -39,7 +39,6 @@ def register(request):
 @login_required
 def userhome(request):
     user = request.user
-    user = User.objects.get(username='superuser')
     orders = user.order_user.all()
     for order in orders:
         product = Product.objects.get(id=order.product_id)
