@@ -10,15 +10,14 @@
 <script src="{% static 'js/codemirror/lib/codemirror.js' %}"></script>
 <script src="{% static 'js/codemirror/python.js' %}"></script>
 <script>
-    function check_yes() {
+    function check() {
         var ck = document.getElementById("check_");
-        var st = document.getElementById("submit_");
-        if (ck.checked) {
+        if (ck.checked==true) {
+            var st = document.getElementById("submit_");
             st.removeAttribute("disabled");
-            st.classList.remove("disabled");
         } else {
+            var st = document.getElementById("submit_");
             st.setAttribute("disabled","disabled");
-            st.classList.add("disabled");
         }
 }
 </script>
@@ -29,7 +28,7 @@
                 <span class="glyphicon glyphicon-fire">热度：{{ product.views }}</span>
             </h2>
             <div class="file-area">
-                <form class="form-horizontal" action="{% url 'productApp:createOrder' %}" method="POST">
+                <form class="form-horizontal" action="{% url 'productApp:createOrder' product.id %}" method="POST">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="code"> 
@@ -43,12 +42,12 @@
                     <div class="form-group">
                         <div class="col-md-5" id="check">
                             <label for="check"></label>
-                            <input type="checkbox" id="check_" onclick="check_yes()"/>&nbsp;我已阅读并同意
+                        <input type="checkbox" id="check_" onclick="check()" autocomplete="off"/>&nbsp;我已阅读并同意
                                 <a href="#">Takepos使用协议</a>
                         </div>
                         <div class="col-md-offset-2 col-md-1 bw-button">
                             <label for="submit"></label>
-                            <button class="btn btn-primary disabled" id="submit_" disabled="disabled" type="submit">提交申请</button>
+                            <button class="btn btn-primary" id="submit_" disabled="disabled" type="submit">提交申请</button>
                         </div>
                     </div>
                 </form>

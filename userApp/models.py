@@ -11,7 +11,6 @@ class User(AbstractUser):
     )
     headsculpture = models.ImageField(upload_to='headsculpture/',default="headsculpture/chicken.jpeg",verbose_name="头像")
     sex = models.CharField(max_length=32,choices=gender,default='男')
-    # 开发订单模型
     # 使用元类在模型创建中为模型取一个别名
     
     def __str__(self):
@@ -28,7 +27,7 @@ class UserOrder(models.Model):
         (3,'运行中'),
         (4,'已取消'),
         (5,'已成功占座'),
-        (6,'占座失败'),
+        (6,'异常错误'),
     )
     user = models.ForeignKey(User,related_name='order_user',verbose_name='用户', on_delete=models.CASCADE)
     product = models.ForeignKey(Product,related_name='order_product',verbose_name='产品',on_delete=models.CASCADE)

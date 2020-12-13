@@ -1,9 +1,9 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.db.models import Count
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 from jinja2 import Environment, FileSystemLoader
 from .models import Product
-from userApp.models import UserOrder
 import json
 import os
 from math import modf
@@ -14,6 +14,8 @@ from pyecharts import options as opts
 from pyecharts.charts import PictorialBar
 from pyecharts.charts import Bar
 from pyecharts.faker import Faker
+from productApp.tasks import send_yzw_handler
+from userApp.models import UserOrder
 
 CurrentConfig.GLOBAL_ENV = Environment(loader=FileSystemLoader("./productApp/templates/echarts"))
 
@@ -70,12 +72,16 @@ def productDetail(request,id):
         'product' : product,
     })
 
-def createOrder(request):
+@login_required
+def createOrder(request,id):
     # 创建订单
-    order = get_object_or_404(UserOrder,id=4)
-    return render(request, 'create_success.html',{
-        'order': order,
-    })
+    user = request.user
+    product = get_object_or_404(Product,id=id)
+    dic = {"trade_no": 202031234029, "user":user,"product":product}
+    AddOrder = UserOrder.objects.create(**dic)
+    code = request.POST.get('code')
+    send_yzw_handler.delay(code,AddOrder.id)
+    return render(request, 'create_success.html')
 
 def showData(request):
     data = {}
