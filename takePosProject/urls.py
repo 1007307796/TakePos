@@ -17,8 +17,9 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from django.conf.urls import include
+from django.conf.urls import include,handler404
 from homeApp.views import home
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,7 +32,7 @@ urlpatterns = [
     path('productApp/',include('productApp.urls')),
     path('ueditor/',include('DjangoUeditor.urls')),
     path('search/',include('haystack.urls')),
+    path('404/', views.page_not_found),
 ]
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
